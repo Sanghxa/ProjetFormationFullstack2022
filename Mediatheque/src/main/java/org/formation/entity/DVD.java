@@ -1,7 +1,6 @@
 package org.formation.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "dvds")
@@ -9,7 +8,9 @@ public class DVD extends Items {
 	
 	private String realisateur;
 	private float duree;
-	private enum type {BluRay,DVD;}
+	
+	@Enumerated
+	private DvdType type;
 	
 	
 //GETTERS AND SETTERS
@@ -24,6 +25,13 @@ public class DVD extends Items {
 	}
 	public void setDuree(float duree) {
 		this.duree = duree;
+	}
+	
+	public DvdType getType() {
+		return type;
+	}
+	public void setType(DvdType type) {
+		this.type = type;
 	};
 	
 	

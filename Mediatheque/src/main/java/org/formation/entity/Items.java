@@ -1,17 +1,16 @@
 package org.formation.entity;
 
 import java.time.LocalDate;
-
 import javax.persistence.*;
-//import javax.persistence.Table;
 
 
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public class Items {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "employeeSequenceGenerator")
-	@SequenceGenerator(name = "employeeSequenceGenerator", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "itemSequenceGenerator")
+	@SequenceGenerator(name = "itemSequenceGenerator", allocationSize = 1)
 	private Long id;
 	private String titre;
 	private int nombreExemplaires;
