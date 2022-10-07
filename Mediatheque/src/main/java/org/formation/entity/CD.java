@@ -5,8 +5,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "cds")
 public class CD extends Items {
+	
+	@Column
 	private String artisteGroupe;
+	
+	@Column
 	private float duree;
+	
+	@Column
 	private int nombreDeTitres;
 	
 	

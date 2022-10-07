@@ -1,11 +1,10 @@
 package org.formation.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -16,12 +15,22 @@ public class Utilisateur {
 	@SequenceGenerator(name = "utilisateurSequenceGenerator", allocationSize = 1)
 	private Long id;
 	
+	@Column
 	private String email;
+	
+	@Column
 	private String mdp;
+	
+	@Column
 	private String nomPrenom;
 	
 	
-//GETTERS AND SETTERS
+	//MAPPING
+	@OneToMany(mappedBy = "utilisateur")
+	private Set<Emprunt> emprunts = new HashSet<>();
+	
+	
+	//GETTERS AND SETTERS
 	public Long getId() {
 		return id;
 	}
@@ -45,6 +54,12 @@ public class Utilisateur {
 	}
 	public void setNomPrenom(String nomPrenom) {
 		this.nomPrenom = nomPrenom;
+	}
+	public Set<Emprunt> getEmprunts() {
+		return emprunts;
+	}
+	public void setEmprunts(Set<Emprunt> emprunts) {
+		this.emprunts = emprunts;
 	}
 	
 	

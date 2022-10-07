@@ -6,10 +6,14 @@ import javax.persistence.*;
 @Table(name = "dvds")
 public class DVD extends Items {
 	
+	@Column
 	private String realisateur;
+	
+	@Column
 	private float duree;
 	
-	@Enumerated
+	@Column
+	@Enumerated(EnumType.STRING)
 	private DvdType type;
 	
 	

@@ -5,7 +5,11 @@ import javax.persistence.*;
 @Entity
 @Table(name = "livres")
 public class Livre extends Items {
+	
+	@Column
 	private String ecrivain;
+	
+	@Column(name = "ISBN")
 	private Long numeroISBN;
 	
 	
