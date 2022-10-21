@@ -1,8 +1,6 @@
 package org.formation.entity;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.*;
 
@@ -31,10 +29,7 @@ public class Items {
 	
 	
 	//MAPPING
-	//mappedBy = id
-	//@ManyToMany(mappedBy = "id")
-    //private Set<Emprunt> emprunts = new HashSet<>(); //mais putain pourquoi ça marche pas
-	
+
 	
 	
 	//GETTERS AND SETTERS

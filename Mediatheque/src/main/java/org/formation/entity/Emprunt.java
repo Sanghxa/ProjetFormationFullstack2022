@@ -1,9 +1,8 @@
 package org.formation.entity;
 
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 //import java.util.HashSet;
 //import java.util.List;
@@ -29,9 +28,8 @@ public class Emprunt {
 	
 	//MAPPING
 	//colonne id_item qui vient de Items
-	//@ManyToMany
-	//@JoinColumn(name = "id_item" , referencedColumnName = "id")
-	//private List<Items> items ;
+	@ManyToMany
+	private List<Items> items ;
 	
 	//Colonne id_utilisateur qui vient de Utilisateur (many emprunt > 1 user)
 	@ManyToOne
