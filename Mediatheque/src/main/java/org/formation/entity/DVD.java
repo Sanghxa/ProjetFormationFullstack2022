@@ -3,7 +3,7 @@ package org.formation.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dvds")
+@Table(name = "dvd")
 public class DVD extends Items {
 	
 	@Column

@@ -11,12 +11,13 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "emprunt")
 public class Emprunt {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "empruntSequenceGenerator")
 	@SequenceGenerator(name = "empruntSequenceGenerator", allocationSize = 1)
-	private Long idEmprunt;
+	private Long id;
 		
 	@Column(name = "date_emprunt")
 	private LocalDate dateEmprunt;
@@ -29,6 +30,7 @@ public class Emprunt {
 	//MAPPING
 	//colonne id_item qui vient de Items
 	@ManyToMany
+	@Column(name = "id_item")
 	private List<Items> items ;
 	
 	//Colonne id_utilisateur qui vient de Utilisateur (many emprunt > 1 user)
@@ -46,11 +48,11 @@ public class Emprunt {
 	public void setDateEmprunt(LocalDate dateEmprunt) {
 		this.dateEmprunt = dateEmprunt;
 	}
-	public Long getIdEmprunt() {
-		return idEmprunt;
+	public Long getId() {
+		return id;
 	}
-	public void setIdEmprunt(Long idEmprunt) {
-		this.idEmprunt = idEmprunt;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public LocalDate getDateRetour() {
 		return dateRetour;

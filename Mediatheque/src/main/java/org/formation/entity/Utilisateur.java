@@ -30,6 +30,7 @@ public class Utilisateur {
 	@Column
 	private String prenom;
 	
+	//1 utilisateur peut avoir plusieurs emprunts
 	@OneToMany(mappedBy = "utilisateur")
 	private Set<Emprunt> emprunts = new HashSet<>() ;
 

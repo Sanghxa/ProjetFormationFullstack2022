@@ -9,6 +9,7 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name = "item")
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Items {
 
@@ -21,15 +22,14 @@ public class Items {
 	@Column
 	private String titre;
 	
-	@Column
+	@Column(name= "nb_exemplaires")
 	private int nombreExemplaires;
 	
-	@Column
+	@Column(name= "date_parution")
 	private LocalDate dateParution;
 	
 	
 	//MAPPING
-
 	
 	
 	//GETTERS AND SETTERS

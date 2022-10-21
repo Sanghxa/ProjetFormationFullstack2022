@@ -3,16 +3,16 @@ package org.formation.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "cds")
+@Table(name = "cd")
 public class CD extends Items {
 	
-	@Column
+	@Column(name="artiste_groupe")
 	private String artisteGroupe;
 	
 	@Column
 	private float duree;
 	
-	@Column
+	@Column (name = "nb_titres")
 	private int nombreDeTitres;
 	
 	

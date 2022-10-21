@@ -3,13 +3,13 @@ package org.formation.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "livres")
+@Table(name = "livre")
 public class Livre extends Items {
 	
 	@Column
 	private String ecrivain;
 	
-	@Column(name = "ISBN")
+	@Column(name = "num_isbn")
 	private Long numeroISBN;
 	
 	
