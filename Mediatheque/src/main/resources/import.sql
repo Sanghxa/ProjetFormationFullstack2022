@@ -7,6 +7,7 @@ INSERT INTO UTILISATEUR (id, email, mdp, nom, prenom) VALUES(3, 'paloma@gmail.co
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(1, '2010-03-31', 7, 'Film1' );
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(2, '2010-03-12', 2, 'Cd1' );
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(3, '2010-03-05', 4, 'Livre1' );
+INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(4, '2010-03-05', 0, 'Livre2' );
 
 	/*  DVD  */
 INSERT INTO DVD (duree, realisateur, type, id) VALUES(98, 'realisateur1', 'dvd',1);
@@ -16,6 +17,7 @@ INSERT INTO CD (artiste_groupe, duree, nb_titres, id) VALUES('artiste1', 55, 14,
 
 	/*  LIVRES  */
 INSERT INTO LIVRE (ecrivain, num_isbn, id) VALUES('auteur1', 9780756404741, 3);
+INSERT INTO LIVRE (ecrivain, num_isbn, id) VALUES('auteur2', 5686868664785, 4);
 
 /* EMPRUNTS */
 	/*  BASE  */
