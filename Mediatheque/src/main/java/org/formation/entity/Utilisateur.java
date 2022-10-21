@@ -4,7 +4,10 @@ package org.formation.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+//import java.util.HashSet;
+//import java.util.Set;
 import javax.persistence.*;
+
 
 
 @Entity
@@ -22,12 +25,17 @@ public class Utilisateur {
 	private String mdp;
 	
 	@Column
-	private String nomPrenom;
+	private String nom;
 	
+	@Column
+	private String prenom;
+	
+	@OneToMany(mappedBy = "utilisateur")
+	private Set<Emprunt> emprunts = new HashSet<>() ;
+
 	
 	//MAPPING
-	@OneToMany(mappedBy = "utilisateur")
-	private Set<Emprunt> emprunts = new HashSet<>();
+	
 	
 	
 	//GETTERS AND SETTERS
@@ -49,11 +57,17 @@ public class Utilisateur {
 	public void setMdp(String mdp) {
 		this.mdp = mdp;
 	}
-	public String getNomPrenom() {
-		return nomPrenom;
+	public String getNom() {
+		return nom;
 	}
-	public void setNomPrenom(String nomPrenom) {
-		this.nomPrenom = nomPrenom;
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
 	}
 	public Set<Emprunt> getEmprunts() {
 		return emprunts;

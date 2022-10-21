@@ -7,6 +7,9 @@ import java.util.Set;
 import javax.persistence.*;
 
 
+
+
+
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public class Items {
@@ -28,21 +31,25 @@ public class Items {
 	
 	
 	//MAPPING
-	@ManyToMany
-	private Set<Emprunt> emprunts = new HashSet<>();
+	//mappedBy = id
+	//@ManyToMany(mappedBy = "id")
+    //private Set<Emprunt> emprunts = new HashSet<>(); //mais putain pourquoi ça marche pas
 	
 	
 	
 	//GETTERS AND SETTERS
+	
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getTitre() {
 		return titre;
 	}
+
 	public void setTitre(String titre) {
 		this.titre = titre;
 	}
@@ -58,5 +65,6 @@ public class Items {
 	public void setDateParution(LocalDate dateParution) {
 		this.dateParution = dateParution;
 	}
+	
 	
 }
