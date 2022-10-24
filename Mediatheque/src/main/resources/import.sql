@@ -4,7 +4,7 @@ INSERT INTO UTILISATEUR (id, email, mdp, nom, prenom) VALUES(2, 'grant@gmail.com
 INSERT INTO UTILISATEUR (id, email, mdp, nom, prenom) VALUES(3, 'paloma@gmail.com', 'paloma', 'Paloma', 'Marianne');
 
 /* ITEMS */
-INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(1, '2010-03-31', 7, 'Film1' );
+INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(1, '2022-10-20', 7, 'Film1' );
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(2, '2010-03-12', 2, 'Cd1' );
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(3, '2010-03-05', 4, 'Livre1' );
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(4, '2010-03-05', 0, 'Livre2' );
