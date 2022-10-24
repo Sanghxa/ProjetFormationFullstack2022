@@ -3,6 +3,8 @@ package org.formation.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.formation.entity.Emprunt;
 import org.formation.entity.Items;
 import org.formation.entity.Utilisateur;
@@ -34,14 +36,14 @@ public class EmpruntService {
 			throws EntityNotFoundException, ItemNotAvailableException, EmpruntLimitReachedException {
 		
 		//1) UTILISATEUR ? (via son Id)
-		Optional<Utilisateur> utilisateurFound = utilisateurRepository.findById(idUtilisateur);
-		if (utilisateurFound.isEmpty()) {
-			throw new EntityNotFoundException("cet utilisateur n'existe pas");
-		}
+		//Optional<Utilisateur> utilisateurFound = utilisateurRepository.findById(idUtilisateur);
+		//if (utilisateurFound.isEmpty()) {
+		//	throw new EntityNotFoundException("cet utilisateur n'existe pas");
+		//}
 		
-				//autre méthode - marche pas non plus 
-				//Optional<Utilisateur> utilisateurFound = utilisateurRepository.findById(idUtilisateur)
-				//.orElseThrow(() -> new EntityNotFoundException("cet utilisateur n'existe pas"));
+		//autre méthode - marche pas non plus 
+		Utilisateur utilisateurFound = utilisateurRepository.findById(idUtilisateur)
+				.orElseThrow(() -> new EntityNotFoundException("cet utilisateur n'existe pas"));
 		
 		
 		//2) ITEM ? (via son Id)
@@ -66,7 +68,7 @@ public class EmpruntService {
 		 //a- on récupère la liste des items empruntés par l'utilisateur
 		List<Emprunt> empruntListe = empruntRepository.findByUtilisateur(utilisateurFound); 
 		
-		 //b- if < 3 : nbEmpruntés + nbEmpruntsPanier <= 3 : add Items à empruntListe de cet utilisateur
+		 //b- if < 3 : nbItemsEmpruntés + nbEmpruntsPanier <= 3 : add Items à empruntListe de cet utilisateur
 		
 		//c- else : throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items en même temps");
 		
@@ -74,6 +76,9 @@ public class EmpruntService {
 		
 		
 		//------------------ OPERATIONS DANS LA BDD ------------------
+		//CREATION DE L'EMPRUNT DANS LA BDD
+		//AU RETOUR EMPRUNT: ON MET UNE DATE DE RETOUR ET SI IL Y A PAS DE DATE DE RETOUR (si c'est null) alors 
+		//on comptabilise l'emprunt dans le quota à pas dépasser (comme ça on garde un historique des emprunts)
 		//DECREMENTATION dans ITEMS quand emprunt
 		//INCREMENTATION dans ITEMS quand retour
 		

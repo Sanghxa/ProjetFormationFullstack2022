@@ -1,0 +1,10 @@
+package org.formation.service;
+
+public class EmpruntLimitReachedException extends Exception {
+	private static final long serialVersionUID = 1L;
+
+	public EmpruntLimitReachedException(String message) {
+		super(message);
+
+	}
+}
