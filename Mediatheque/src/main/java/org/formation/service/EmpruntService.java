@@ -1,9 +1,14 @@
 package org.formation.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.formation.entity.Emprunt;
+import org.formation.entity.Items;
+import org.formation.entity.Utilisateur;
 import org.formation.repository.EmpruntRepository;
+import org.formation.repository.ItemsRepository;
+import org.formation.repository.UtilisateurRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,25 +20,70 @@ public class EmpruntService {
 	@Autowired
 	private EmpruntRepository empruntRepository;
 	
-	//FAIRE UN EMPRUNT
-	public Emprunt effectuerEmprunt(Long id_Utilisateur, List<Long> idItems) {
+	@Autowired
+	private UtilisateurRepository utilisateurRepository;
+	
+	@Autowired
+	private ItemsRepository itemsRepository;
+	
+	
+//----------------------------------------------------FAIRE UN EMPRUNT----------------------------------------------------
+	
+	
+	public Emprunt effectuerEmprunt(Long idUtilisateur, List<Long> idItems) 
+			throws EntityNotFoundException, ItemNotAvailableException, EmpruntLimitReachedException {
 		
-		//vérifier que tous les items sont dispo
+		//1) UTILISATEUR ? (via son Id)
+		Optional<Utilisateur> utilisateurFound = utilisateurRepository.findById(idUtilisateur);
+		if (utilisateurFound.isEmpty()) {
+			throw new EntityNotFoundException("cet utilisateur n'existe pas");
+		}
+		
+				//autre méthode - marche pas non plus 
+				//Optional<Utilisateur> utilisateurFound = utilisateurRepository.findById(idUtilisateur)
+				//.orElseThrow(() -> new EntityNotFoundException("cet utilisateur n'existe pas"));
 		
 		
-		//vérifier que l'utilisateur n'a pas dépassé son quota (3 items max)
+		//2) ITEM ? (via son Id)
+		for (Long idItem: idItems) {
+			Optional<Items> itemFound = itemsRepository.findById(idItem);
+			
+			//si item n'existe pas
+			if(itemFound.isEmpty()) {
+				throw new EntityNotFoundException("cet item n'existe pas");
+			}
+			
+			//si item pas dispo
+			if(itemFound.get().getNombreExemplaires() == 0) {
+				throw new ItemNotAvailableException("cet item n'est pas disponible");
+			}
+			
+		}
 		
-		//Opérations en base
-		//Décrémenter le nombre d'exemplaire disponible
-		//Créer un emprunt en position la date d'emprunt
+		
+		
+		// + QUE 3 ?
+		 //a- on récupère la liste des items empruntés par l'utilisateur
+		List<Emprunt> empruntListe = empruntRepository.findByUtilisateur(utilisateurFound); 
+		
+		 //b- if < 3 : nbEmpruntés + nbEmpruntsPanier <= 3 : add Items à empruntListe de cet utilisateur
+		
+		//c- else : throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items en même temps");
+		
+		
+		
+		
+		//------------------ OPERATIONS DANS LA BDD ------------------
+		//DECREMENTATION dans ITEMS quand emprunt
+		//INCREMENTATION dans ITEMS quand retour
 		
 		return emprunt;
 		
 	}
 	
 	
-	//RESTITUER UN EMPRUNT
-		//
+//----------------------------------------------------RENDRE UN EMPRUNT----------------------------------------------------
+	//
 	
 	
 
