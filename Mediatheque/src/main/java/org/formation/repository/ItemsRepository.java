@@ -20,7 +20,7 @@ public interface ItemsRepository extends JpaRepository<Items, Long> {
 	//List<Items> findAllItemsByDateParution();
 	
 	//Voir Disponibles (if nb_exemplaire > 0)
-	@Query("FROM Items i WHERE i.nb_exemplaires > 0")
+	@Query("FROM Items i WHERE i.nombreExemplaires > 0")
 	List<Items> findAllItemsByNombreExemplaires();
 	
 	

@@ -8,9 +8,12 @@ INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(1, '2022-10-2
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(2, '2010-03-12', 2, 'Cd1' );
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(3, '2010-03-05', 4, 'Livre1' );
 INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(4, '2010-03-05', 0, 'Livre2' );
+INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(5, '2010-03-05', 0, 'Livre3' );
+INSERT INTO ITEM (id, date_parution, nb_exemplaires, titre) VALUES(6, '2010-03-05', 5, 'Livre3' );
 
 	/*  DVD  */
-INSERT INTO DVD (duree, realisateur, type, id) VALUES(98, 'realisateur1', 'dvd',1);
+INSERT INTO DVD (duree, realisateur, type, id) VALUES(98, 'realisateur1', 'Dvd',1);
+INSERT INTO DVD (duree, realisateur, type, id) VALUES(103, 'realisateur2', 'Dvd',6);
 
 	/*  CD  */
 INSERT INTO CD (artiste_groupe, duree, nb_titres, id) VALUES('artiste1', 55, 14, 2);
@@ -18,11 +21,12 @@ INSERT INTO CD (artiste_groupe, duree, nb_titres, id) VALUES('artiste1', 55, 14,
 	/*  LIVRES  */
 INSERT INTO LIVRE (ecrivain, num_isbn, id) VALUES('auteur1', 9780756404741, 3);
 INSERT INTO LIVRE (ecrivain, num_isbn, id) VALUES('auteur2', 5686868664785, 4);
+INSERT INTO LIVRE (ecrivain, num_isbn, id) VALUES('auteur3', 2787785268587, 5);
 
 /* EMPRUNTS */
 	/*  BASE  */
 INSERT INTO EMPRUNT (id, date_emprunt, date_retour, id_utilisateur) VALUES(1,'2019-12-20','2019-12-27',1);
-INSERT INTO EMPRUNT (id, date_emprunt, date_retour, id_utilisateur) VALUES(2,'2019-11-18','2019-11-15',3);
+INSERT INTO EMPRUNT (id, date_emprunt, date_retour, id_utilisateur) VALUES(2,'2019-11-18','2019-11-15',1);
 
 	/*  ID ITEMS  */
 INSERT INTO EMPRUNT_ITEMS (emprunt_id, items_id) VALUES(1,2);

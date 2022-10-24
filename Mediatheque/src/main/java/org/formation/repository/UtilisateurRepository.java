@@ -16,5 +16,5 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
 	//est-ce que cet email existe dans notre bdd ?
 	//boolean existsById(ID primaryKey) -> indicates whether an entity with the given ID exists
 	Boolean existsByEmail (String email);
-	
+
 }
