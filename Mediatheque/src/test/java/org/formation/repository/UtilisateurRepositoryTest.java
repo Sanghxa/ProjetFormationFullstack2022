@@ -1,4 +1,4 @@
-package com.formation.repositoryTest;
+package org.formation.repository;
 
 import org.formation.repository.UtilisateurRepository;
 import org.junit.jupiter.api.BeforeEach;

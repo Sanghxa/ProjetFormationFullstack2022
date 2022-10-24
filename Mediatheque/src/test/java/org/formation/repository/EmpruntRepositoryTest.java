@@ -1,4 +1,4 @@
-package com.formation.repositoryTest;
+package org.formation.repository;
 
 public class EmpruntRepositoryTest {
 

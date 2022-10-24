@@ -1,4 +1,4 @@
-package com.formation.repositoryTest;
+package org.formation.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,11 +36,13 @@ public class ItemsRepositoryTest {
 	
 	//Test si on récupère bien que les nouveautés des 2 dernières semaines
 	//(tester direct sur la console h2 avec les commandes sql pour voir si ça marche) ==> marche pas
-	public void testOfNouveautes() {
-		List<Items> response = itemsRepository.findAllItemsByDateParution();
-		System.out.println("Nombres d'items paru ces 2 dernières semaines");
-		
-	}
+	/*
+	 * public void testOfNouveautes() { List<Items> response =
+	 * itemsRepository.findAllItemsByDateParution();
+	 * System.out.println("Nombres d'items paru ces 2 dernières semaines");
+	 * 
+	 * }
+	 */
 	
 	
 	//Test si on récupère bien que les items dispo (avec nb Exemplaire > 0)
