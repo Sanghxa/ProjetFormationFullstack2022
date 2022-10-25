@@ -1,8 +1,8 @@
 package org.formation.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
+
 
 import javax.persistence.EntityNotFoundException;
 
@@ -56,6 +56,7 @@ public class EmpruntService {
 		 //a- initialisation du panier
 		List<Items> itemsDuPanier = new ArrayList<>();
 		
+		
 		 //b- 
 		  //i- vérifie que l'item existe 
 		
@@ -63,8 +64,9 @@ public class EmpruntService {
 			Items itemFound = itemsRepository.findById(idItem)
 					.orElseThrow(() -> new EntityNotFoundException("cet item n'existe pas"));
 			
+			
 		  //i- vérifie si item pas dispo
-			if(itemFound.getNombreExemplaires() == 0) {
+			if(itemFound.get().getNombreExemplaires() == 0) {
 				throw new ItemNotAvailableException("cet item n'est pas disponible");
 			}
 					
@@ -77,16 +79,31 @@ public class EmpruntService {
 		
 		
 //////////3) + QUE 3 ?
-	//////a- on récupère la liste des items empruntés par l'utilisateur
-		List<Emprunt> EmpruntsUtilisateur = empruntRepository.findByUtilisateur(utilisateurFound);
+		 //a- on récupère la liste des items empruntés par l'utilisateur
+		List<Emprunt> empruntsUtilisateur = empruntRepository.findByUtilisateur(utilisateurFound);
 		
-	//////b- if EmpruntsUtilisateur.size() + itemsPaniers.size() <= 3 : add Items à empruntListe de cet utilisateur, else throw EmpruntLimitReachedException
-		if (EmpruntsUtilisateur.size() + itemsDuPanier.size() > 3 ) {
+		 //b- if EmpruntsUtilisateur.size() + itemsDuPaniers.size() > 3 : throw EmpruntLimitReachedException
+		if (empruntsUtilisateur.size() + itemsDuPanier.size() > 3 ) {
 			throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items");
 		}
 		
 		
-	//////c- else : throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items en même temps");
+		 //c- sinon 
+		  //i- add la liste des itemsDuPanier dans la table EMPRUNTS associé à l'id utilisateur + date de retour null (signifie que l'emprunt est en cours)
+		Emprunt empruntEnCours = new Emprunt();
+		empruntEnCours.setDateEmprunt(LocalDateTime.now());
+		empruntEnCours.setId(itemsDuPanier);
+		empruntEnCours.setUtilisateur(utilisateurFound);
+        
+		empruntRepository.save(empruntEnCours);
+		
+		
+		
+		  //ii- décrémentation du nombreExemplaires dans la table ITEMS
+		
+
+		
+		
 		
 		
 		
@@ -104,7 +121,7 @@ public class EmpruntService {
 	
 	
 //----------------------------------------------------RENDRE UN EMPRUNT----------------------------------------------------
-	//
+	//emprunt rendu en retard
 	
 	
 
