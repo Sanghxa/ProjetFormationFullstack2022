@@ -88,8 +88,15 @@ public class EmpruntService {
 		}
 		
 		
-		 //c- sinon 
-		  //i- add la liste des itemsDuPanier dans la table EMPRUNTS associé à l'id utilisateur + date de retour null (signifie que l'emprunt est en cours)
+		 //c- else
+		  //i- décrémentation du nombreExemplaires dans la table ITEMS
+			//NB: mettre truc.get().getMachin quand le type est Optional
+		for (Long idItem: idItems) {
+			Optional<Items> itemEmpruntes = itemsRepository.findById(idItem);
+			itemEmpruntes.get().setNombreExemplaires(itemEmpruntes.get().getNombreExemplaires()-1);
+		}
+		
+		  //ii- add la liste des itemsDuPanier dans la table EMPRUNTS associé à l'id utilisateur + date de retour null (signifie que l'emprunt est en cours)
 		Emprunt empruntEnCours = new Emprunt();
 		empruntEnCours.setDateEmprunt(LocalDate.now());
 		empruntEnCours.setItems(itemsDuPanier);
@@ -98,15 +105,9 @@ public class EmpruntService {
 		empruntRepository.save(empruntEnCours);
 		
 		
+		return empruntEnCours;
 		
-		  //ii- décrémentation du nombreExemplaires dans la table ITEMS
-		
-
-		
-		
-		
-		
-		
+	}
 		
 		//------------------ OPERATIONS DANS LA BDD ------------------
 		//CREATION DE L'EMPRUNT DANS LA BDD --> save
@@ -115,9 +116,7 @@ public class EmpruntService {
 		//DECREMENTATION dans ITEMS quand emprunt
 		//INCREMENTATION dans ITEMS quand retour
 		
-		return emprunt;
-		
-	}
+
 	
 	
 //----------------------------------------------------RENDRE UN EMPRUNT----------------------------------------------------
