@@ -1,5 +1,6 @@
 package org.formation.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,27 +53,26 @@ public class EmpruntService {
 		
 //////////2) ITEM ? (via son Id)
 		
-		for (Long idItem: idItems) {
-			Optional<Items> itemFound = itemsRepository.findById(idItem);
-			
-			//si item n'existe pas
-			if(itemFound.isEmpty()) {
-				throw new EntityNotFoundException("cet item n'existe pas");
-			}
-			
-			//si item pas dispo
-			if(itemFound.get().getNombreExemplaires() == 0) {
-				throw new ItemNotAvailableException("cet item n'est pas disponible");
-			}
-			
-		}
-		
 		 //a- initialisation du panier
 		List<Items> itemsDuPanier = new ArrayList<>();
 		
-		 //b- ajout d'items dans le panier itemsDuPanier.add(itemAAjouter)
+		 //b- 
+		  //i- vérifie que l'item existe 
 		
+		for (Long idItem: idItems) {
+			Items itemFound = itemsRepository.findById(idItem)
+					.orElseThrow(() -> new EntityNotFoundException("cet item n'existe pas"));
+			
+		  //i- vérifie si item pas dispo
+			if(itemFound.getNombreExemplaires() == 0) {
+				throw new ItemNotAvailableException("cet item n'est pas disponible");
+			}
+					
 		
+		  //iii- ajout des items dans le panier 
+			itemsDuPanier.add(itemFound);
+
+		}
 		
 		
 		
@@ -80,16 +80,13 @@ public class EmpruntService {
 	//////a- on récupère la liste des items empruntés par l'utilisateur
 		List<Emprunt> EmpruntsUtilisateur = empruntRepository.findByUtilisateur(utilisateurFound);
 		
-	//////b -liste des items dans le panier
-		Liste<Items> panier
-		
-	//////c- if EmpruntsUtilisateur.size() + itemsPaniers.size() <= 3 : add Items à empruntListe de cet utilisateur, else throw EmpruntLimitReachedException
-		if (EmpruntsUtilisateur.size() +  > 3 ) {
+	//////b- if EmpruntsUtilisateur.size() + itemsPaniers.size() <= 3 : add Items à empruntListe de cet utilisateur, else throw EmpruntLimitReachedException
+		if (EmpruntsUtilisateur.size() + itemsDuPanier.size() > 3 ) {
 			throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items");
 		}
 		
 		
-	//////d- else : throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items en même temps");
+	//////c- else : throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items en même temps");
 		
 		
 		
