@@ -88,15 +88,15 @@ public class EmpruntService {
 		}
 		
 		
-		 //c- else
-		  //i- décrémentation du nombreExemplaires dans la table ITEMS
-			//NB: mettre truc.get().getMachin quand le type est Optional
+//////////3) VALIDATION EMPRUNT
+		 //a- décrémentation du nombreExemplaires dans la table ITEMS
+		 //NB: mettre truc.get().getMachin quand le type est Optional
 		for (Long idItem: idItems) {
 			Optional<Items> itemEmpruntes = itemsRepository.findById(idItem);
 			itemEmpruntes.get().setNombreExemplaires(itemEmpruntes.get().getNombreExemplaires()-1);
 		}
 		
-		  //ii- add la liste des itemsDuPanier dans la table EMPRUNTS associé à l'id utilisateur + date de retour null (signifie que l'emprunt est en cours)
+		 //b- add la liste des itemsDuPanier dans la table EMPRUNTS associé à l'id utilisateur + date de retour null (signifie que l'emprunt est en cours)
 		Emprunt empruntEnCours = new Emprunt();
 		empruntEnCours.setDateEmprunt(LocalDate.now());
 		empruntEnCours.setItems(itemsDuPanier);
@@ -109,17 +109,74 @@ public class EmpruntService {
 		
 	}
 		
-		//------------------ OPERATIONS DANS LA BDD ------------------
-		//CREATION DE L'EMPRUNT DANS LA BDD --> save
-		//AU RETOUR EMPRUNT: ON MET UNE DATE DE RETOUR ET SI IL Y A PAS DE DATE DE RETOUR (si c'est null) alors 
-		//on comptabilise l'emprunt dans le quota à pas dépasser (comme ça on garde un historique des emprunts)
-		//DECREMENTATION dans ITEMS quand emprunt
-		//INCREMENTATION dans ITEMS quand retour
-		
+
 
 	
 	
 //----------------------------------------------------RENDRE UN EMPRUNT----------------------------------------------------
+	
+	
+	public Emprunt retournerEmprunt(Long idUtilisateur, List<Long> idItems) 
+			throws EntityNotFoundException, ItemAlreadyReturned, ItemLate {
+		
+//////////1) UTILISATEUR ? (via son Id)
+		
+		 //a- Utilisateur existe ? (dans table UTILISATEUR)
+		Utilisateur utilisateurFound = utilisateurRepository.findById(idUtilisateur)
+				.orElseThrow(() -> new EntityNotFoundException("cet utilisateur n'existe pas"));
+		
+
+		
+//////////2) ITEM ? (via son Id)
+		
+		 //a- initialisation du panierRetours
+			List<Items> itemsDuPanierRetours = new ArrayList<>();
+			
+			
+		 //b- récupère la liste des emprunts by idUtilisateur			
+			for (Long idItem: idItems) {
+				Emprunt itemEmpruntFound = empruntRepository.findByUtilisateurId(idUtilisateur)
+						.orElseThrow(() -> new EntityNotFoundException ("cet utilisateur n'a jamais fait d'emprunts") );
+				
+				
+			  //i- item déjà rendu ?
+				if(itemEmpruntFound.getDateRetour() != null) {
+					throw new ItemAlreadyReturned("cet item a déjà été rendu");
+				}
+						
+			
+			  //iii- ajout des items dans le panier de retours
+				itemsDuPanierRetours.add(itemEmpruntFound);
+
+			}
+			
+//////////3) VALIDATION RETOUR	
+			
+		 //a- création d'une date de retour dans la table EMPRUNTS
+		for (Long idItem: idItems) {
+			Optional<Emprunt> itemRetour = empruntRepository.findById(idItem);
+			itemRetour.get().setDateRetour(LocalDate.now());
+			
+			if (itemRetour.get().getDateRetour() - itemRetour.get().getDateEmprunt() > 7) {
+				int retard = itemRetour.get().getDateRetour() - itemRetour.get().getDateEmprunt();
+				throw ItemLate("Item rendu en retard. Retard de : " + retard + " jours."  );
+			}
+		}
+		
+		 //b- Incrémentation de l'item retourné
+		Items retourEnCours = new Items();
+		retourEnCours.setNombreExemplaires(retourEnCours.getNombreExemplaires()+1);
+        
+		itemsRepository.save(retourEnCours);
+		
+	
+
+	}
+
+	//AU RETOUR EMPRUNT: ON MET UNE DATE DE RETOUR ET SI IL Y A PAS DE DATE DE RETOUR (si c'est null) alors 
+	//on comptabilise l'emprunt dans le quota à pas dépasser (comme ça on garde un historique des emprunts)
+	//INCREMENTATION dans ITEMS quand retour
+	
 	//emprunt rendu en retard
 	
 	
