@@ -35,18 +35,23 @@ public class EmpruntService {
 	public Emprunt effectuerEmprunt(Long idUtilisateur, List<Long> idItems) 
 			throws EntityNotFoundException, ItemNotAvailableException, EmpruntLimitReachedException {
 		
-		//1) UTILISATEUR ? (via son Id)
-		//Optional<Utilisateur> utilisateurFound = utilisateurRepository.findById(idUtilisateur);
-		//if (utilisateurFound.isEmpty()) {
-		//	throw new EntityNotFoundException("cet utilisateur n'existe pas");
-		//}
 		
-		//autre méthode - marche pas non plus 
+//////////1) UTILISATEUR ? (via son Id)
+		
 		Utilisateur utilisateurFound = utilisateurRepository.findById(idUtilisateur)
 				.orElseThrow(() -> new EntityNotFoundException("cet utilisateur n'existe pas"));
 		
+		//Reviens au même que:
+		/*Optional<Utilisateur> utilisateurFound = utilisateurRepository.findById(idUtilisateur);
+		  if (utilisateurFound.isEmpty()) {
+			throw new EntityNotFoundException("cet utilisateur n'existe pas");
+		}*/
 		
-		//2) ITEM ? (via son Id)
+		
+		
+		
+//////////2) ITEM ? (via son Id)
+		
 		for (Long idItem: idItems) {
 			Optional<Items> itemFound = itemsRepository.findById(idItem);
 			
@@ -62,21 +67,35 @@ public class EmpruntService {
 			
 		}
 		
+		 //a- initialisation du panier
+		List<Items> itemsDuPanier = new ArrayList<>();
+		
+		 //b- ajout d'items dans le panier itemsDuPanier.add(itemAAjouter)
 		
 		
-		// + QUE 3 ?
-		 //a- on récupère la liste des items empruntés par l'utilisateur
-		List<Emprunt> empruntListe = empruntRepository.findByUtilisateur(utilisateurFound); 
 		
-		 //b- if < 3 : nbItemsEmpruntés + nbEmpruntsPanier <= 3 : add Items à empruntListe de cet utilisateur
 		
-		//c- else : throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items en même temps");
+		
+//////////3) + QUE 3 ?
+	//////a- on récupère la liste des items empruntés par l'utilisateur
+		List<Emprunt> EmpruntsUtilisateur = empruntRepository.findByUtilisateur(utilisateurFound);
+		
+	//////b -liste des items dans le panier
+		Liste<Items> panier
+		
+	//////c- if EmpruntsUtilisateur.size() + itemsPaniers.size() <= 3 : add Items à empruntListe de cet utilisateur, else throw EmpruntLimitReachedException
+		if (EmpruntsUtilisateur.size() +  > 3 ) {
+			throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items");
+		}
+		
+		
+	//////d- else : throw new EmpruntLimitReachedException("vous ne pouvez pas emprunter plus de 3 items en même temps");
 		
 		
 		
 		
 		//------------------ OPERATIONS DANS LA BDD ------------------
-		//CREATION DE L'EMPRUNT DANS LA BDD
+		//CREATION DE L'EMPRUNT DANS LA BDD --> save
 		//AU RETOUR EMPRUNT: ON MET UNE DATE DE RETOUR ET SI IL Y A PAS DE DATE DE RETOUR (si c'est null) alors 
 		//on comptabilise l'emprunt dans le quota à pas dépasser (comme ça on garde un historique des emprunts)
 		//DECREMENTATION dans ITEMS quand emprunt

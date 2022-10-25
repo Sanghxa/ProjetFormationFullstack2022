@@ -28,7 +28,7 @@ public class UtilisateurRepositoryTest {
 		System.out.println("*******************");
 	}
 	
-	//Test si trouve utilisateur via email dans database
+	//Test findByEmail - on récupère utilisateur via email ?
 	@Test 
 	public void testFindUserIdByEmail() {
 		Optional<Utilisateur> findUtilisateur = utilisateurRepository.findByEmail("paloma@gmail.com");
@@ -38,7 +38,7 @@ public class UtilisateurRepositoryTest {
 
 	}
 	
-	//Test si email existe dans la bdd
+	//Test existsByEmail - email exists dans la database ?
 	@Test 
 	public void testFindIfUserExists() {
 		assertTrue(utilisateurRepository.existsByEmail("paloma@gmail.com"));

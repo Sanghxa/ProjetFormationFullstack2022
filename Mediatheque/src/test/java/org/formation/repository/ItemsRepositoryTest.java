@@ -29,7 +29,7 @@ public class ItemsRepositoryTest {
 		System.out.println("*******************");
 	}
 	
-	//Test si on récupère bien tous les items
+	//Test findAllItems - on récupère bien tous les items ?
 	@Test
 	public void testFindAllItems() {
 		List<Items> response = itemsRepository.findAllItems();
@@ -39,7 +39,7 @@ public class ItemsRepositoryTest {
 	
 	
 	
-	//Test si on récupère bien que les items dispo (avec nb Exemplaire > 0)
+	//Test findAllItemsByNombreExemplaires - on récupère bien que les items dispo (avec nb Exemplaire > 0)?
 	@Test
 	public void testFindOnlyAvailableItems() {
 		List<Items> response = itemsRepository.findAllItemsByNombreExemplaires();
@@ -49,7 +49,7 @@ public class ItemsRepositoryTest {
 	
 	
 	//TEST DES TYPES D'ITEMS
-	//Test si on récupère que les dvd
+	//Test findAllDvd - on récupère que les dvd ?
 	@Test
 	public void testFindOnlyDvd() {
 		List<Items> response = itemsRepository.findAllDvd();
@@ -58,7 +58,7 @@ public class ItemsRepositoryTest {
 	}
 	
 	
-	//Test si on récupère que les cd
+	//Test findAllCd - on récupère que les cd ?
 	@Test
 	public void testFindOnlyCd() {
 		List<Items> response = itemsRepository.findAllCd();
@@ -67,7 +67,7 @@ public class ItemsRepositoryTest {
 	}
 	
 	
-	//Test si on récupère que les livres
+	//Test findAllLivre - on récupère que les livres ?
 	@Test
 	public void testFindOnlyLivre() {
 		List<Items> response = itemsRepository.findAllLivre();
