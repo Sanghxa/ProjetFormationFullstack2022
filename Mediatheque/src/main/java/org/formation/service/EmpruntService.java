@@ -1,6 +1,6 @@
 package org.formation.service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.*;
 
 
@@ -66,7 +66,7 @@ public class EmpruntService {
 			
 			
 		  //i- vérifie si item pas dispo
-			if(itemFound.get().getNombreExemplaires() == 0) {
+			if(itemFound.getNombreExemplaires() == 0) {
 				throw new ItemNotAvailableException("cet item n'est pas disponible");
 			}
 					
@@ -91,8 +91,8 @@ public class EmpruntService {
 		 //c- sinon 
 		  //i- add la liste des itemsDuPanier dans la table EMPRUNTS associé à l'id utilisateur + date de retour null (signifie que l'emprunt est en cours)
 		Emprunt empruntEnCours = new Emprunt();
-		empruntEnCours.setDateEmprunt(LocalDateTime.now());
-		empruntEnCours.setId(itemsDuPanier);
+		empruntEnCours.setDateEmprunt(LocalDate.now());
+		empruntEnCours.setItems(itemsDuPanier);
 		empruntEnCours.setUtilisateur(utilisateurFound);
         
 		empruntRepository.save(empruntEnCours);

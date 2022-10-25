@@ -66,6 +66,12 @@ public class Emprunt {
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
 	}
+	public List<Items> getItems() {
+		return items;
+	}
+	public void setItems(List<Items> items) {
+		this.items = items;
+	}
 
 
 	
