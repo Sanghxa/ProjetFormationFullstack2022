@@ -122,7 +122,7 @@ public class EmpruntService {
 //////////1) UTILISATEUR ? (via son Id)
 		
 		 //a- Utilisateur existe ? (dans table UTILISATEUR)
-		utilisateurRepository.findById(idUtilisateur)
+		Utilisateur utilisateurFound = utilisateurRepository.findById(idUtilisateur)
 				.orElseThrow(() -> new EntityNotFoundException("cet utilisateur n'existe pas"));
 		
 
@@ -150,9 +150,6 @@ public class EmpruntService {
 		empruntARendre.setDateRetour(LocalDate.now());
 		empruntRepository.save(empruntARendre);
 	
-		
-		
-		
 		
 		return empruntARendre;
 		
